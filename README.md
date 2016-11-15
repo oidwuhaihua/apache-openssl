@@ -1,7 +1,9 @@
-<B>一、Apache TLS 1.0 升级 TLS 1.2 问题 。</B>
+一、Apache TLS 1.0 升级 TLS 1.2 问题 。
 
+ ```cpp
+ 
 1、最初版本 
-  A )  OpenSSL 0.9.8e-fips-rhel5
+  A )   OpenSSL 0.9.8e-fips-rhel5
         -bash-3.2$ openssl version -a
         OpenSSL 0.9.8e-fips-rhel5 01 Jul 2008
         built on: Wed Jan 18 10:10:45 EST 2012
@@ -92,23 +94,39 @@
          (ECDHE_RSA), and a strong cipher (AES_128_GCM).
          
          编译了很多次遇到很多问题，最终上面这个版本编译成功。过程中遇到的问题如下所示：
-         Cannot load /usr/local/apache/modules/mod_ssl.so into server: /usr/local/apache/modules/mod_ssl.so: undefined symbol:      
-         EC_KEY_free 注意：编译成功后启动提示 mod_ssl.so已经被内置加载，不需要重新加载wiki有各种解释，不要纠结重新编译。
+         
+         Cannot load /usr/local/apache/modules/mod_ssl.so into server: /usr/local/apache/modules/mod_ssl.so: undefined symbol: 
+         EC_KEY_free 
+         注意：编译成功后启动提示 mod_ssl.so已经被内置加载，不需要重新加载wiki有各种解释，不要纠结重新编译。
+         
          configure: error: ... Error, SSL/TLS libraries were missing or unusable 
          通过如下命令解决：export LDFLAGS=-ldl
+         
          Syntax error on line 56 of /usr/local/apache/conf/extra/httpd-ssl.conf:
-         Invalid command 'SSLPassPhraseDialog', perhaps misspelled or defined by a module not included in the server configuration
-         注意：没去纠结重新编译Apche 
-         undefined symbol: ssl_cmd_SSLMutex 解决方法：/usr/local/apache/bin/apxs -i -c -a -D HAVE_OPENSSL=1 -I /usr/include/openssl *.c
-         undefined symbol: X509_INFO_free 解决方法：undefined symbol: X509_INFO_free
+         Invalid command 'SSLPassPhraseDialog', perhaps misspelled or defined by a module not included in the server   
+         configuration
+         注意：没去纠结重新编译Apache
+         
+         undefined symbol: ssl_cmd_SSLMutex 
+         解决方法：/usr/local/apache/bin/apxs -i -c -a -D HAVE_OPENSSL=1 -I /usr/include/openssl *.c
+         
+         undefined symbol: X509_INFO_free 
+         解决方法：undefined symbol: X509_INFO_free
+         
          mod_ssl.so: undefined symbol: EC_KEY_free 注意：没去纠结，重新编译。 
          
+         
          一些Apache 命令使用：
-         /usr/local/apache3/bin/apachectl -k stop -f /usr/local/apache3/conf/httpd.conf 停止
-         /usr/local/apache3/bin/apachectl -k start -f /usr/local/apache3/conf/httpd.conf 启动
-         /usr/local/apache3/bin/apachectl -k configtest -f /usr/local/apache3/conf/httpd.conf 检查所有配置文件是否有问题
-         cat /usr/local/apache3/build/config.nice 查看Apache 加载的内置模板
-         /usr/local/apache/bin/apxs -c -i mod_ssl.c 重新编译Apache 某个源文件到modules目录
+         
+           /usr/local/apache3/bin/apachectl -k stop -f /usr/local/apache3/conf/httpd.conf 停止
+
+           /usr/local/apache3/bin/apachectl -k start -f /usr/local/apache3/conf/httpd.conf 启动
+
+           /usr/local/apache3/bin/apachectl -k configtest -f /usr/local/apache3/conf/httpd.conf 检查所有配置文件是否有问题
+
+           cat /usr/local/apache3/build/config.nice 查看Apache 加载的内置模板
+
+           /usr/local/apache/bin/apxs -c -i mod_ssl.c 重新编译Apache 某个源文件到modules目录
             
 
        
