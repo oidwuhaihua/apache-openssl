@@ -11,32 +11,39 @@
         platform: linux-x86_64
         options:  bn(64,64) md2(int) rc4(ptr,int) des(idx,cisc,16,int) blowfish(ptr2) 
         compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DKRB5_MIT -       
-        I/usr/kerberos/include -DL_ENDIAN -DTERMIO -Wall -DMD32_REG_T=int -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -
+        I/usr/kerberos/include -DL_ENDIAN -DTERMIO -Wall -DMD32_REG_T=int -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -  q 
+        fexceptions -
         fstack-
-        protector --param=ssp-buffer-size=4 -m64 -mtune=generic -Wa,--noexecstack -DOPENSSL_USE_NEW_FUNCTIONS -fno-strict-aliasing -
+        protector --param=ssp-buffer-size=4 -m64 -mtune=generic -Wa,--noexecstack -DOPENSSL_USE_NEW_FUNCTIONS -fno-strict-
+        aliasing -
         DOPENSSL_BN_ASM_MONT -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM
         OPENSSLDIR: "/etc/pki/tls"
         engines:  dynamic 
+        
    B ) Apache 版本
         [root@mtest conf]# /usr/local/apache3/bin/apachectl -version -f /usr/local/apache3/conf/httpd.conf
         Server version: Apache/2.2.26 (Unix)
         Server built:   Nov 15 2016 15:50:10
         
-   C ) 下载 最新版本的openssl and compile //(官方描述只有1.0以上版本才支TLS1.2,http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslprotocol)
-       
+   C ) 下载 最新版本的openssl and compile //(官方描述只有1.0以上版本才支
+        TLS1.2,http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslprotocol)
        1、wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz
        2、tar解压 cd 到 openssl 目录下编译
-       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl (注意：不需要替换之前版本的openssl 文件，放到新的目录 避免发生不可预料的问题。)
+       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl (注意：不需要替换之前版本的openssl 文件，放到新的目录 避免 
+       发生不可预料的问题。)
+       
        4、检查版本
           [root@mtest conf]# openssl.bak version
           OpenSSL 1.0.1g 7 Apr 2014
+          
     D ) 重新编译Apache  
         cd 到 apache 目录下执行如下命令：
-        1、./configure --prefix=/usr/local/apache3 --enable-so  --enable-proxy --enable-proxy-connect --enable-proxy-http --enable-  
-        proxy-scgi --enable-proxy-ajp --enable-proxy-balancer --enable-rewrite --enable-ssl --with-ssl=/usr/local/openssl/ --enable-cgi         --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr-util/
+        1、./configure --prefix=/usr/local/apache3 --enable-so  --enable-proxy --enable-proxy-connect --enable-proxy-http --            enable- proxy-scgi --enable-proxy-ajp --enable-proxy-balancer --enable-rewrite --enable-ssl --with- 
+        ssl=/usr/local/openssl/ --enable-cgi --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr-util/
         2、make
         3、make install
-     E ) 通过openssl 生成证书（认证流程：通过openssl 会生成一个service.key文件，通过service.key文件可以生成service.crt文件，crt文件会上送到证书          公司申请ca证书认证）注意：如果自己之前有证书 并且通过第三方公司认证是支持TLS 1.2的 直接拿service.key service.crt当相对路径，再通过
+        
+     E ) 通过openssl 生成证书（认证流程：通过openssl 会生成一个service.key文件，通过service.key文件可以生成service.crt文件，crt文件会上送到         证书公司申请ca证书认证）注意：如果自己之前有证书 并且通过第三方公司认证是支持TLS 1.2的 直接拿service.key service.crt当相对路径，再通过
         httpd-ssl-conf 配置即可，以下生成的key crt 用于测试 。
          1、cd 到 /usr/local/apache3/conf 目录
          2、执行：/usr/local/openssl/bin/openssl genrsa -out server.key 2048
@@ -64,6 +71,7 @@
                 Signature ok
                 subject=/C=CH/ST=china/L=rebby/O=rebby/OU=rebby/CN=mtest.xxx.com/emailAddress=haihua@163.com
                 Getting Private key
+                
       F ) 更改配置
          1、vim /usr/local/apache3/conf/httpd.conf 
              #Include conf/extra/httpd-ssl.conf 注意：找到这行把 注释去掉 
