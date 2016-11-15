@@ -48,6 +48,7 @@
          1、cd 到 /usr/local/apache3/conf 目录
          2、执行：/usr/local/openssl/bin/openssl genrsa -out server.key 2048
          3、执行：/usr/local/openssl/bin/openssl req -new -key server.key -out server.csr
+         
                 You are about to be asked to enter information that will be incorporated
                 into your certificate request.
                 What you are about to enter is what is called a Distinguished Name or a DN.
