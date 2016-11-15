@@ -4,7 +4,7 @@
 
  ```Java
 1、最初版本 
-  A )   OpenSSL 0.9.8e-fips-rhel5
+    A )  OpenSSL 0.9.8e-fips-rhel5
         -bash-3.2$ openssl version -a
         OpenSSL 0.9.8e-fips-rhel5 01 Jul 2008
         built on: Wed Jan 18 10:10:45 EST 2012
@@ -43,7 +43,7 @@
         2、make
         3、make install
         
-     E ) 通过openssl 生成证书（认证流程：通过openssl 会生成一个service.key文件，通过service.key文件可以生成service.crt文件，crt文件会上送到         证书公司申请ca证书认证）注意：如果自己之前有证书 并且通过第三方公司认证是支持TLS 1.2的 直接拿service.key service.crt当相对路径，再通过
+    E ) 通过openssl 生成证书（认证流程：通过openssl 会生成一个service.key文件，通过service.key文件可以生成service.crt文件，crt文件会上送到         证书公司申请ca证书认证）注意：如果自己之前有证书 并且通过第三方公司认证是支持TLS 1.2的 直接拿service.key service.crt当相对路径，再通过
         httpd-ssl-conf 配置即可，以下生成的key crt 用于测试 。
          1、cd 到 /usr/local/apache3/conf 目录
          2、执行：/usr/local/openssl/bin/openssl genrsa -out server.key 2048
@@ -72,7 +72,7 @@
                 subject=/C=CH/ST=china/L=rebby/O=rebby/OU=rebby/CN=mtest.xxx.com/emailAddress=haihua@163.com
                 Getting Private key
                 
-      F ) 更改配置
+     F ) 更改配置
          1、vim /usr/local/apache3/conf/httpd.conf 
              #Include conf/extra/httpd-ssl.conf 注意：找到这行把 注释去掉 
          2、vim /usr/local/apache3/conf/extra/httpd-ssl.conf 注意：配置你自己的域名映射 即可
@@ -81,7 +81,7 @@
             ProxyPass /          http://xx.xx.xxx.11:7001/MBSServer/
             ProxyPassReverse  /          http://xx.0.223.11:7001/MBSServer/
                 
-      G ) 启动Apache 
+     G ) 启动Apache 
          1、[root@mtest bin]# /usr/local/apache3/bin/apachectl start 注意：执行的时候可能导致文件找不到，我们可以换种方式执行。
             httpd: Could not open configuration file /usr/local/apache/conf/httpd.conf: No such file or directory
          2、 执行： /usr/local/apache3/bin/apachectl -k stop -f /usr/local/apache3/conf/httpd.conf
