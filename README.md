@@ -25,7 +25,7 @@
         Server version: Apache/2.2.26 (Unix)
         Server built:   Nov 15 2016 15:50:10
         
-   C ) 下载 最新版本的openssl and compile //(官方描述只有1.0以上版本才支
+   C ) 下载 最新版本的openssl and compile (官方描述只有1.0以上版本才支
         TLS1.2,http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslprotocol)
        1、wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz
        2、tar解压 cd 到 openssl 目录下编译
@@ -68,6 +68,7 @@
                 A challenge password []:   注意：密码直接不要输入 回车。
                 An optional company name []:rebby
          4、执行： /usr/local/openssl/bin/openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
+                
                 Signature ok
                 subject=/C=CH/ST=china/L=rebby/O=rebby/OU=rebby/CN=mtest.xxx.com/emailAddress=haihua@163.com
                 Getting Private key
@@ -96,7 +97,7 @@
             daemon   24896 24885  0 16:17 ?        00:00:00 /usr/local/apache3/bin/httpd -k start -f /usr/local/apache3/conf/httpd.conf
             root     25302  7428  0 18:54 pts/2    00:00:00 grep apache 注意：可以看的出进程已经启动了。
             
-         3、测试 google浏览器测试 F12 --> Security 可以看出已经支持TLS 1.2了 ，也可以通过第三方网站测试（https://www.ssllabs.com/ssltest/）
+         3、测试 google浏览器测试 F12 --> Security 如下所示：可以看出已经支持TLS 1.2了 ，也可以通过第三方网站测试（https://www.ssllabs.com/ssltest/）
          
          The connection to this site is encrypted and authenticated using a strong protocol (TLS 1.2), a strong key exchange      
          (ECDHE_RSA), and a strong cipher (AES_128_GCM).
