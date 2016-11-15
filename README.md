@@ -1,6 +1,7 @@
-一、Apache TLS 1.0 升级 TLS 1.2 问题 。
+一、Apache TLS 1.0 升级 TLS 1.2 总结 。
+===
 
- ```cpp
+ ```Java
  
 1、最初版本 
   A )   OpenSSL 0.9.8e-fips-rhel5
@@ -25,8 +26,7 @@
        
        1、wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz
        2、tar解压 cd 到 openssl 目录下编译
-       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl (注意：不需要替换之前版本的openssl 文件，放到新的目录 避免发生不 
-       可预料的问题。)
+       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl <font face="red">(注意：不需要替换之前版本的openssl 文件，放到新的目录 避免发生不可预料的问题。)<font>
        4、检查版本
           [root@mtest conf]# openssl.bak version
           OpenSSL 1.0.1g 7 Apr 2014
@@ -97,7 +97,7 @@
          
          Cannot load /usr/local/apache/modules/mod_ssl.so into server: /usr/local/apache/modules/mod_ssl.so: undefined symbol: 
          EC_KEY_free 
-         注意：编译成功后启动提示 mod_ssl.so已经被内置加载，不需要重新加载wiki有各种解释，不要纠结重新编译。
+         "注意：编译成功后启动提示 mod_ssl.so已经被内置加载，不需要重新加载wiki有各种解释，不要纠结重新编译。"
          
          configure: error: ... Error, SSL/TLS libraries were missing or unusable 
          通过如下命令解决：export LDFLAGS=-ldl
