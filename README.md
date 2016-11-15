@@ -1,8 +1,8 @@
 一、Apache TLS 1.0 升级 TLS 1.2 总结 。
 ===
 
+
  ```Java
- 
 1、最初版本 
   A )   OpenSSL 0.9.8e-fips-rhel5
         -bash-3.2$ openssl version -a
@@ -22,11 +22,11 @@
         Server version: Apache/2.2.26 (Unix)
         Server built:   Nov 15 2016 15:50:10
         
-   C ) 下载 最新版本的openssl and compile (官方描述只有1.0以上版本才支TLS1.2,http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslprotocol)
+   C ) 下载 最新版本的openssl and compile //(官方描述只有1.0以上版本才支TLS1.2,http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslprotocol)
        
        1、wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz
        2、tar解压 cd 到 openssl 目录下编译
-       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl <font face="red">(注意：不需要替换之前版本的openssl 文件，放到新的目录 避免发生不可预料的问题。)<font>
+       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl (注意：不需要替换之前版本的openssl 文件，放到新的目录 避免发生不可预料的问题。)
        4、检查版本
           [root@mtest conf]# openssl.bak version
           OpenSSL 1.0.1g 7 Apr 2014
