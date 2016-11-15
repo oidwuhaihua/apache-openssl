@@ -1,4 +1,1 @@
-d# apache-openssl
-dsafdasfdsa
-dsafdsafsa
-<img src='https://camo.githubusercontent.com/d4318678c74511e4825b4277cf17241d4d0623cb/687474703a2f2f37786b746d7a2e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f747261696e2d746f2d667573616e2e737667'/>
+<B>一、Apache TLS 1.0 升级 TLS 1.2问题 。</B>
