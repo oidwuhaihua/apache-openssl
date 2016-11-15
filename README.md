@@ -29,8 +29,7 @@
         TLS1.2,http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslprotocol)
        1、wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz
        2、tar解压 cd 到 openssl 目录下编译
-       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl (注意：不需要替换之前版本的openssl 文件，放到新的目录 避免 
-       发生不可预料的问题。)
+       3、./config  --prefix=/usr/local/openssl --openssldir=/usr/local/ssl "(注意：不需要替换之前版本的openssl 文件，放到新的目录 避免发生不可预料的问题。)"
        
        4、检查版本
           [root@mtest conf]# openssl.bak version
@@ -43,8 +42,8 @@
         2、make
         3、make install
         
-    E ) 通过openssl 生成证书（认证流程：通过openssl 会生成一个service.key文件，通过service.key文件可以生成service.crt文件，crt文件会上送到         证书公司申请ca证书认证）注意：如果自己之前有证书 并且通过第三方公司认证是支持TLS 1.2的 直接拿service.key service.crt当相对路径，再通过
-        httpd-ssl-conf 配置即可，以下生成的key crt 用于测试 。
+    E ) 通过openssl 生成证书（认证流程：通过openssl 会生成一个service.key文件，通过service.key文件可以生成service.crt文件，crt文件会上送到         证书公司申请ca证书认证）"注意：如果自己之前有证书 并且通过第三方公司认证是支持TLS 1.2的 直接拿service.key service.crt当相对路径，再通过
+        httpd-ssl-conf 配置即可，以下生成的key crt 用于测试 。"
          1、cd 到 /usr/local/apache3/conf 目录
          2、执行：/usr/local/openssl/bin/openssl genrsa -out server.key 2048
          3、执行：/usr/local/openssl/bin/openssl req -new -key server.key -out server.csr
@@ -61,12 +60,12 @@
                 Locality Name (eg, city) []:rebby
                 Organization Name (eg, company) [Internet Widgits Pty Ltd]:rebby
                 Organizational Unit Name (eg, section) []:rebby
-                Common Name (e.g. server FQDN or YOUR name) []:mtest.xxx.com 注意：输入域名地址
+                Common Name (e.g. server FQDN or YOUR name) []:mtest.xxx.com "注意：输入域名地址"
                 Email Address []:haihua@163.com
 
                 Please enter the following 'extra' attributes
                 to be sent with your certificate request
-                A challenge password []:   注意：密码直接不要输入 回车。
+                A challenge password []:   "注意：密码直接不要输入 回车。"
                 An optional company name []:rebby
          4、执行： /usr/local/openssl/bin/openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
                 
@@ -76,15 +75,15 @@
                 
      F ) 更改配置
          1、vim /usr/local/apache3/conf/httpd.conf 
-             #Include conf/extra/httpd-ssl.conf 注意：找到这行把 注释去掉 
-         2、vim /usr/local/apache3/conf/extra/httpd-ssl.conf 注意：配置你自己的域名映射 即可
+             #Include conf/extra/httpd-ssl.conf "注意：找到这行把 注释去掉 "
+         2、vim /usr/local/apache3/conf/extra/httpd-ssl.conf "注意：配置你自己的域名映射 即可"
             <VirtualHost _default_:443>
             ServerName mtest.xxx.com
             ProxyPass /          http://xx.xx.xxx.11:7001/MBSServer/
             ProxyPassReverse  /          http://xx.0.223.11:7001/MBSServer/
                 
      G ) 启动Apache 
-         1、[root@mtest bin]# /usr/local/apache3/bin/apachectl start 注意：执行的时候可能导致文件找不到，我们可以换种方式执行。
+         1、[root@mtest bin]# /usr/local/apache3/bin/apachectl start "注意：执行的时候可能导致文件找不到，我们可以换种方式执行。"
             httpd: Could not open configuration file /usr/local/apache/conf/httpd.conf: No such file or directory
          2、 执行： /usr/local/apache3/bin/apachectl -k stop -f /usr/local/apache3/conf/httpd.conf
             [root@mtest bin]# ps -ef | grep apache
@@ -96,7 +95,7 @@
             daemon   24890 24885  0 16:15 ?        00:00:00 /usr/local/apache3/bin/httpd -k start -f /usr/local/apache3/conf/httpd.conf
             daemon   24891 24885  0 16:15 ?        00:00:00 /usr/local/apache3/bin/httpd -k start -f /usr/local/apache3/conf/httpd.conf
             daemon   24896 24885  0 16:17 ?        00:00:00 /usr/local/apache3/bin/httpd -k start -f /usr/local/apache3/conf/httpd.conf
-            root     25302  7428  0 18:54 pts/2    00:00:00 grep apache 注意：可以看的出进程已经启动了。
+            root     25302  7428  0 18:54 pts/2    00:00:00 grep apache "注意：可以看的出进程已经启动了。"
             
          3、测试 google浏览器测试 F12 --> Security 如下所示：可以看出已经支持TLS 1.2了 ，也可以通过第三方网站测试（https://www.ssllabs.com/ssltest/）
          
@@ -110,20 +109,20 @@
          "注意：编译成功后启动提示 mod_ssl.so已经被内置加载，不需要重新加载wiki有各种解释，不要纠结重新编译。"
          
          configure: error: ... Error, SSL/TLS libraries were missing or unusable 
-         通过如下命令解决：export LDFLAGS=-ldl
+         "通过如下命令解决：export LDFLAGS=-ldl"
          
          Syntax error on line 56 of /usr/local/apache/conf/extra/httpd-ssl.conf:
          Invalid command 'SSLPassPhraseDialog', perhaps misspelled or defined by a module not included in the server   
          configuration
-         注意：没去纠结重新编译Apache
+         "注意：没去纠结重新编译Apache"
          
          undefined symbol: ssl_cmd_SSLMutex 
-         解决方法：/usr/local/apache/bin/apxs -i -c -a -D HAVE_OPENSSL=1 -I /usr/include/openssl *.c
+         "解决方法：/usr/local/apache/bin/apxs -i -c -a -D HAVE_OPENSSL=1 -I /usr/include/openssl *.c"
          
          undefined symbol: X509_INFO_free 
-         解决方法：undefined symbol: X509_INFO_free
+         "解决方法：undefined symbol: X509_INFO_free"
          
-         mod_ssl.so: undefined symbol: EC_KEY_free 注意：没去纠结，重新编译。 
+         mod_ssl.so: undefined symbol: EC_KEY_free "注意：没去纠结，重新编译。 "
          
          
          一些Apache 命令使用：
